@@ -3,15 +3,15 @@ import time
   
 GPIO.setmode(GPIO.BCM)
   
-# Pin deklarálás
+# Pin deklaralas
 LED_red = 17
 LED_green = 27
 LED_blue = 22
 GPIO_PIN = 24
 GPIO.setup(GPIO_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.setup(LED_Rot, GPIO.OUT) 
-GPIO.setup(LED_Gruen, GPIO.OUT)
-GPIO.setup(LED_Blau, GPIO.OUT)
+GPIO.setup(LED_red, GPIO.OUT) 
+GPIO.setup(LED_green, GPIO.OUT)
+GPIO.setup(LED_blue, GPIO.OUT)
 Freq = 100
 
 RED = GPIO.PWM(LED_red, Freq) 
@@ -30,9 +30,9 @@ def LED_Color(Red, Green,Blue, pause):
     RED.ChangeDutyCycle(0)
     GREEN.ChangeDutyCycle(0)
   
-print "Sensor-Test [press ctrl+c to end it]"
+print "Sensor-Test"
   
-# Jelérzékelés és képkészítés
+# Jelerzekeles es kepkeszites
 def outFunction(null):
         print("Signal detected")
         LED_Color(1,0,0,.02)
@@ -41,7 +41,7 @@ def outFunction(null):
         n = 10
         while n>0:
             print(n)
-            time.sleep(1) #1 sec várakozás
+            time.sleep(1) #1 sec varakozas
             n = n-1
         os.system('sh jpgmake.sh')
   
