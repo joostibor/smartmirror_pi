@@ -32,13 +32,16 @@ def LED_Farbe(Red, Green, Blue, pause):
     BLUE.ChangeDutyCycle(0)
   
 print "Sensor-Test"
-  
+# Okostukor program inditas
+import os
+os.system('sh smstart.sh')
+
+
 # Jelerzekeles
 def outFunction(null):
         print("Signal detected")
         LED_Farbe(1,0,0,.02)
         import time
-        import os
         n = 10
         while n>0:
 		if n>3:
