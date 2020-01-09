@@ -1,6 +1,8 @@
-import RPi.GPIO as GPIO
+# coding=utf-8
 import time
+time.sleep(5); #rendszer be tudjon tölteni
 import os
+import RPi.GPIO as GPIO
 import sqlite3
 import random
 from time import localtime, strftime
@@ -66,7 +68,7 @@ def outFunction(null):
             access_token,
             access_token_secret
     )
-    os.system('sh jpgmake.sh')
+    os.system('/home/pi/Documents/Projekt/jpgmake.sh')
                          
     # Kulcsok es tokenek hasznalata 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)  
@@ -89,11 +91,12 @@ def outFunction(null):
     status = message
     api.update_with_media(photo_path, status=status)
     print "Posztolva"
+    LED_Farbe(0,1,1,.500)
     global phototweets
     phototweets = phototweets + 1
                     
     # tmp kep torlese
-    os.system('sh jpgremove.sh')
+    os.system('/home/pi/Documents/Projekt/jpgremove.sh')
     print "Temp kep torolve"
 GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=outFunction, bouncetime=100)
 
@@ -108,8 +111,8 @@ try:
             startdate = strftime("%Y-%m-%d %H:%M:%S", localtime())
             print startdate
             # Okostukor program inditas
-            os.system('sh smstart.sh')
-            
+            os.chdir('/home/pi/Documents/Projekt/MagicMirror')
+            os.system('npm start&')
             run = True
             time.sleep(3)
             # timer a MagicMirror kikapcsolasahoz 1 perc tetlenseg utan OFF
@@ -121,7 +124,7 @@ try:
                     x=0
                 if x==60:
                     #tukor mukodes vege, adatbazisba iras
-                    os.system('./probakill.sh')
+                    os.system('/home/pi/Documents/Projekt/probakill.sh')
                     stopdate = strftime("%Y-%m-%d %H:%M:%S", localtime())
                     conn = sqlite3.connect('/home/pi/Documents/Projekt/mirrordb.sqlite')
                     cur = conn.cursor()                
